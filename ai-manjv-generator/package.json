@@ -1,0 +1,13 @@
+{
+  "name": "ai-comic-drama-mvp",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AI 漫剧生成网站最小可用 demo",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

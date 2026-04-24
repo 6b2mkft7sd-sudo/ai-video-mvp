@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI 漫剧生成 MVP</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="workspace">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">MVP Demo</p>
+            <h1>AI 漫剧生成器</h1>
+          </div>
+          <div class="status-pill" id="modelMode">本地模拟模式</div>
+        </header>
+
+        <section class="generator-panel">
+          <label for="storyInput">输入一句话或一段剧情</label>
+          <textarea id="storyInput" rows="7" placeholder="例如：一个被全网误会的女孩，在直播间用三分钟反转真相，让背叛她的人当场破防。"></textarea>
+          <div class="actions">
+            <button id="generateBtn" type="button">
+              <span class="button-icon">▶</span>
+              生成分镜
+            </button>
+            <button id="sampleBtn" type="button" class="ghost-button">填入示例</button>
+          </div>
+          <p class="hint">第一版会生成 3-5 个分镜，并用占位图和分镜文案下载完成闭环。</p>
+        </section>
+
+        <section class="result-layout">
+          <section class="storyboard-section">
+            <div class="section-heading">
+              <h2>分镜列表</h2>
+              <span id="storyboardCount">等待生成</span>
+            </div>
+            <div id="storyboardList" class="storyboard-list empty-state">
+              <p>输入剧情后点击生成，这里会展示场景、人物、动作、台词和画面提示词。</p>
+            </div>
+          </section>
+
+          <aside class="video-panel">
+            <div class="section-heading">
+              <h2>模拟视频结果</h2>
+              <span id="videoStatusText">未开始</span>
+            </div>
+            <div class="phone-preview" id="videoPreview">
+              <div class="preview-screen">
+                <div class="play-mark">▶</div>
+                <p>等待分镜生成</p>
+              </div>
+            </div>
+            <div class="progress-track">
+              <div id="videoProgress" class="progress-bar"></div>
+            </div>
+            <button id="generateVideoBtn" type="button" class="video-action-button" disabled>生成视频</button>
+            <a id="downloadBtn" class="download-button disabled" href="#" aria-disabled="true">下载分镜文案</a>
+          </aside>
+        </section>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "name": "AI 漫剧生成 MVP",
+  "install": "npm install",
+  "terminals": [
+    {
+      "name": "dev-server",
+      "command": "npm start",
+      "description": "Node HTTP server for the AI 漫剧 storyboard generator, served at http://localhost:3000."
+    }
+  ],
+  "ports": [
+    {
+      "name": "web",
+      "port": 3000
+    }
+  ]
+}

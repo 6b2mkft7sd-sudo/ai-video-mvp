@@ -1,0 +1,32 @@
+{
+  "note": "每个视觉动作 = 所属句子入场（beats.json cues，已吸附瞬态）+ offset 秒，再由 scripts/prep-audio.mjs 吸附到 ±window 内最强实测瞬态 → beats.json actions。sfx 为 null 的是次要动作，不配音效。",
+  "snap": {"window": 0.2, "minStrength": 0.3, "minGap": 0.12},
+  "actions": [
+    {"id": "s1_draw", "cue": "s1", "offset": 0, "sfx": "whoosh", "what": "她的脸逐笔画出（金线描边→填色）"},
+    {"id": "s1_red", "cue": "s1", "offset": 0.5, "sfx": null, "what": "眼眶泛红"},
+    {"id": "s1_tear", "cue": "s1", "offset": 0.95, "sfx": "drop", "what": "一滴泪长出、滑落"},
+    {"id": "s2_wide", "cue": "s2a", "offset": 0, "sfx": "whoosh", "what": "镜头拉远，桌子和「你」逐笔画出"},
+    {"id": "s2_ask", "cue": "s2a", "offset": 0.3, "sfx": "pop", "what": "你头顶弹出气泡「怎么了？」"},
+    {"id": "s2_offer", "cue": "s2b", "offset": 0, "sfx": "pop", "what": "第二个气泡「要不要我帮你弄？」+ 扳手"},
+    {"id": "s2_box", "cue": "s2b", "offset": 0.55, "sfx": "tick", "what": "工具箱砸到桌上"},
+    {"id": "s4_shake", "cue": "s4", "offset": 0, "sfx": "whoosh", "what": "推近她：摇头两下"},
+    {"id": "s4_mute", "cue": "s4", "offset": 0.85, "sfx": "pop", "what": "她的「…」气泡缩没，嘴抿成一条线"},
+    {"id": "s5_pan", "cue": "s5", "offset": 0, "sfx": "whoosh", "what": "镜头横摇到你：清单板画出"},
+    {"id": "s5_tick1", "cue": "s5", "offset": 0.3, "sfx": "tick", "what": "打勾 1"},
+    {"id": "s5_tick2", "cue": "s5", "offset": 0.55, "sfx": "tick", "what": "打勾 2"},
+    {"id": "s5_tick3", "cue": "s5", "offset": 0.8, "sfx": "tick", "what": "打勾 3，冒汗"},
+    {"id": "s6_chair", "cue": "s6", "offset": 0, "sfx": "whoosh", "what": "她身边画出一把空椅子，亮起暖光"},
+    {"id": "s6_think", "cue": "s6", "offset": 0.5, "sfx": "pop", "what": "她的念头泡：两个人并排坐着"},
+    {"id": "s7_bubbles", "cue": "s7a", "offset": 0, "sfx": "pop", "what": "拉远：两人头顶各冒念头泡（对方小头像 + 温度计）"},
+    {"id": "s7_cold", "cue": "s7a", "offset": 0.3, "sfx": "whoosh", "what": "两支温度计同时掉到冰点，小头像变冷"},
+    {"id": "s7_split", "cue": "s7b", "offset": 0, "sfx": "thud", "what": "桌子从中间裂开，两半慢慢分开；两人扭头，光转冷"}
+  ],
+  "shots": [
+    {"n": "01", "cues": ["s1"], "line": 0, "drew": "她的脸部特写：头发/脸/眉眼逐笔描出，眼眶泛红，一滴泪长出滑落"},
+    {"n": "02", "cues": ["s2a", "s2b"], "line": 1, "drew": "拉远成双人景：桌子、你画出；你举手问，两条聊天气泡依次弹出（第二条带扳手），工具箱砸到桌上"},
+    {"n": "03", "cues": ["s4"], "line": 2, "drew": "推近她：摇头两下，嘴边「…」气泡缩没，嘴抿成一条线、低头"},
+    {"n": "04", "cues": ["s5"], "line": 3, "drew": "横摇到你：桌上清单板画出，你拿笔连打三个勾，额头冒汗，眉头拧紧"},
+    {"n": "05", "cues": ["s6"], "line": 4, "drew": "回到她：身边空椅子画出并亮暖光，她看向椅子，念头泡里是两个人并排坐着"},
+    {"n": "06", "cues": ["s7a", "s7b"], "line": 5, "drew": "拉远：两人头顶念头泡里各是对方的小头像 + 温度计，同时掉到冰点；桌子裂成两半慢慢分开，两人扭头，光由暖转冷，悬住"}
+  ]
+}

@@ -1,6 +1,7 @@
 {
   "hasSoundtrack": false,
   "source": null,
+  "bgmMeanDb": null,
   "onsets": [],
   "cues": {
     "s1": {
@@ -34,6 +35,124 @@
     "s7b": {
       "start": 10.4,
       "end": null
+    }
+  },
+  "actions": {
+    "s1_draw": {
+      "t": 0.25,
+      "base": 0.25,
+      "onset": null,
+      "strength": null,
+      "anchor": true
+    },
+    "s1_red": {
+      "t": 0.75,
+      "base": 0.75,
+      "onset": null,
+      "strength": null
+    },
+    "s1_tear": {
+      "t": 1.2,
+      "base": 1.2,
+      "onset": null,
+      "strength": null
+    },
+    "s2_wide": {
+      "t": 2.05,
+      "base": 2.05,
+      "onset": null,
+      "strength": null,
+      "anchor": true
+    },
+    "s2_ask": {
+      "t": 2.35,
+      "base": 2.35,
+      "onset": null,
+      "strength": null
+    },
+    "s2_offer": {
+      "t": 2.6,
+      "base": 2.6,
+      "onset": null,
+      "strength": null,
+      "anchor": true
+    },
+    "s2_box": {
+      "t": 3.15,
+      "base": 3.15,
+      "onset": null,
+      "strength": null
+    },
+    "s4_shake": {
+      "t": 4.7,
+      "base": 4.7,
+      "onset": null,
+      "strength": null,
+      "anchor": true
+    },
+    "s4_mute": {
+      "t": 5.55,
+      "base": 5.55,
+      "onset": null,
+      "strength": null
+    },
+    "s5_pan": {
+      "t": 6.65,
+      "base": 6.65,
+      "onset": null,
+      "strength": null,
+      "anchor": true
+    },
+    "s5_tick1": {
+      "t": 6.95,
+      "base": 6.95,
+      "onset": null,
+      "strength": null
+    },
+    "s5_tick2": {
+      "t": 7.2,
+      "base": 7.2,
+      "onset": null,
+      "strength": null
+    },
+    "s5_tick3": {
+      "t": 7.45,
+      "base": 7.45,
+      "onset": null,
+      "strength": null
+    },
+    "s6_chair": {
+      "t": 8.25,
+      "base": 8.25,
+      "onset": null,
+      "strength": null,
+      "anchor": true
+    },
+    "s6_think": {
+      "t": 8.75,
+      "base": 8.75,
+      "onset": null,
+      "strength": null
+    },
+    "s7_bubbles": {
+      "t": 9.85,
+      "base": 9.85,
+      "onset": null,
+      "strength": null,
+      "anchor": true
+    },
+    "s7_cold": {
+      "t": 10.15,
+      "base": 10.15,
+      "onset": null,
+      "strength": null
+    },
+    "s7_split": {
+      "t": 10.4,
+      "base": 10.4,
+      "onset": null,
+      "strength": null,
+      "anchor": true
     }
   }
 }

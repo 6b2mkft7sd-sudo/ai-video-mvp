@@ -1,55 +1,49 @@
 import React from 'react';
-import {AbsoluteFill, Audio, Easing, interpolate, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
-import {CUES, HAS_SOUNDTRACK} from './cues';
+import {AbsoluteFill, Audio, Easing, interpolate, Sequence, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
+import {ACT, ACTIONS, CUES, HAS_SOUNDTRACK, LINES, sfxVolume} from './cues';
 import {Backdrop} from './components/Backdrop';
 import {Chrome} from './components/Chrome';
 import {Line} from './components/Line';
+import {Stage} from './scene/Stage';
 
-const CENTER = 920;
+type Pose = {at: number; s: number; x: number; y: number};
 
-// 结尾「两个人」：两道细线从并排慢慢分开，只做情绪，不抢字。
-const ApartLines: React.FC<{startF: number}> = ({startF}) => {
-	const frame = useCurrentFrame();
-	const {durationInFrames} = useVideoConfig();
-	if (frame < startF) return null;
-	const o = interpolate(frame, [startF, startF + 20], [0, 0.6], {extrapolateRight: 'clamp'});
-	const gap = interpolate(frame, [startF + 8, durationInFrames], [14, 230], {
-		extrapolateLeft: 'clamp',
-		extrapolateRight: 'clamp',
-		easing: Easing.bezier(0.33, 0, 0.2, 1),
-	});
-	const bar = (x: number) => (
-		<div
-			style={{
-				position: 'absolute',
-				top: 1290,
-				left: x - 1,
-				width: 2,
-				height: 96,
-				opacity: o,
-				background: 'linear-gradient(180deg, rgba(226,194,123,0), rgba(226,194,123,0.85), rgba(226,194,123,0))',
-			}}
-		/>
-	);
-	return (
-		<>
-			{bar(540 - gap / 2)}
-			{bar(540 + gap / 2)}
-		</>
-	);
+// 每镜一个机位，切换从该镜第一个动作的瞬态起跳，前几帧走完大半（落点在拍上）。
+const POSES: Pose[] = [
+	{at: CUES.s1.startF, s: 2.75, x: 330, y: 778},
+	{at: ACT('s2_wide'), s: 1.12, x: 545, y: 850},
+	{at: ACT('s4_shake'), s: 1.9, x: 345, y: 805},
+	{at: ACT('s5_pan'), s: 1.7, x: 705, y: 880},
+	{at: ACT('s6_chair'), s: 1.5, x: 410, y: 830},
+	{at: ACT('s7_bubbles'), s: 1.04, x: 540, y: 820},
+];
+const MOVE = 18;
+const moveEase = Easing.bezier(0.16, 1, 0.3, 1);
+const SCREEN_X = 540;
+const SCREEN_Y = 900;
+
+const useCamera = () => {
+	const f = useCurrentFrame();
+	let i = 0;
+	while (i + 1 < POSES.length && f >= POSES[i + 1].at) i++;
+	const cur = POSES[i];
+	const prev = POSES[Math.max(0, i - 1)];
+	const p = i === 0 ? 1 : moveEase(Math.min(1, Math.max(0, (f - cur.at) / MOVE)));
+	const drift = 1 + 0.012 * Math.max(0, f - cur.at) / 30;
+	const s = Math.exp(Math.log(prev.s) + (Math.log(cur.s) - Math.log(prev.s)) * p) * drift;
+	return {shot: i + 1, s, x: prev.x + (cur.x - prev.x) * p, y: prev.y + (cur.y - prev.y) * p};
 };
+
+const CAP_Y = 1600;
 
 export const VibeM02RemotionTrial10s: React.FC = () => {
 	const frame = useCurrentFrame();
 	const {durationInFrames} = useVideoConfig();
+	const cam = useCamera();
 	const c = CUES;
+	const [l1, l2, l4, l5, l6, l7] = LINES;
 
-	const hold = c.s7a.startF;
-	const cool = interpolate(frame, [hold, durationInFrames], [0, 1], {
-		extrapolateLeft: 'clamp',
-		extrapolateRight: 'clamp',
-	});
-	const push = interpolate(frame, [hold, durationInFrames], [1, 1.03], {
+	const cool = interpolate(frame, [ACT('s7_split'), ACT('s7_split') + 45], [0, 1], {
 		extrapolateLeft: 'clamp',
 		extrapolateRight: 'clamp',
 	});
@@ -57,57 +51,41 @@ export const VibeM02RemotionTrial10s: React.FC = () => {
 	return (
 		<AbsoluteFill>
 			<Backdrop cool={cool} />
-			<Chrome />
-			<AbsoluteFill style={{transform: `scale(${push})`}}>
-				<Line variant="small" segs={[{t: '她眼睛红了。'}]} startF={c.s1.startF} endF={c.s1.endF} y={CENTER} stagger={2} />
-
-				<Line variant="big" segs={[{t: '你问：怎么了？'}]} startF={c.s2a.startF} endF={c.s2a.endF} y={CENTER - 70} />
-				<Line
-					variant="big"
-					segs={[{t: '要不要我'}, {t: '帮你弄', gold: true}, {t: '？'}]}
-					startF={c.s2b.startF}
-					endF={c.s2b.endF}
-					y={CENTER + 70}
-				/>
-
-				<Line
-					variant="big"
-					segs={[{t: '她'}, {t: '摇头', gold: true}, {t: '，不说话了。'}]}
-					startF={c.s4.startF}
-					endF={c.s4.endF}
-					y={CENTER}
-					stagger={2}
-				/>
-
-				<Line
-					variant="big"
-					segs={[{t: '你'}, {t: '急着', gold: true}, {t: '把事弄好。'}]}
-					startF={c.s5.startF}
-					endF={c.s5.endF}
-					y={CENTER}
-				/>
-
-				<Line
-					variant="small"
-					segs={[{t: '她只想你先'}, {t: '坐下来', gold: true}, {t: '。'}]}
-					startF={c.s6.startF}
-					endF={c.s6.endF}
-					y={CENTER}
-					stagger={1.4}
-				/>
-
-				<Line variant="big" segs={[{t: '于是两个人都觉得：'}]} startF={c.s7a.startF} endF={null} y={CENTER - 80} />
-				<Line
-					variant="hero"
-					segs={[{t: '对方'}, {t: '不在乎', gold: true}, {t: '。'}]}
-					startF={c.s7b.startF}
-					endF={null}
-					y={CENTER + 70}
-					stagger={3}
-				/>
-				<ApartLines startF={c.s7b.startF + 12} />
+			<AbsoluteFill>
+				<svg width={1080} height={1920} viewBox="0 0 1080 1920">
+					<g transform={`translate(${SCREEN_X} ${SCREEN_Y}) scale(${cam.s}) translate(${-cam.x} ${-cam.y})`}>
+						<Stage />
+					</g>
+				</svg>
 			</AbsoluteFill>
+			<AbsoluteFill
+				style={{
+					background: 'radial-gradient(ellipse 80% 60% at 50% 46%, rgba(0,0,0,0) 50%, rgba(0,0,0,0.6) 100%)',
+				}}
+			/>
+			<AbsoluteFill style={{background: '#3E5A7A', mixBlendMode: 'color', opacity: 0.38 * cool}} />
+			<AbsoluteFill
+				style={{
+					background: 'linear-gradient(180deg, rgba(10,9,7,0) 74%, rgba(10,9,7,0.82) 82%, rgba(10,9,7,0.9) 100%)',
+				}}
+			/>
+
+			<Chrome shot={cam.shot} />
+
+			<Line variant="small" t={l1.segs[0].t} gold={l1.segs[0].gold} startF={c.s1.startF} endF={c.s1.endF} y={CAP_Y} />
+			<Line variant="small" t={l2.segs[0].t} startF={c.s2a.startF} endF={c.s2a.endF} y={CAP_Y} />
+			<Line variant="big" t={l4.segs[0].t} gold={l4.segs[0].gold} startF={c.s4.startF} endF={c.s4.endF} y={CAP_Y} />
+			<Line variant="big" t={l5.segs[0].t} gold={l5.segs[0].gold} startF={c.s5.startF} endF={c.s5.endF} y={CAP_Y} />
+			<Line variant="small" t={l6.segs[0].t} gold={l6.segs[0].gold} startF={c.s6.startF} endF={c.s6.endF} y={CAP_Y} />
+			<Line variant="small" t={l7.segs[0].t} startF={c.s7a.startF} endF={null} y={CAP_Y - 66} />
+			<Line variant="big" t={l7.segs[1].t} gold={l7.segs[1].gold} startF={c.s7b.startF} endF={null} y={CAP_Y + 22} />
+
 			{HAS_SOUNDTRACK ? <Audio src={staticFile('soundtrack.wav')} /> : null}
+			{ACTIONS.filter((a) => a.sfx).map((a) => (
+				<Sequence key={a.id} from={a.f} durationInFrames={Math.min(18, durationInFrames - a.f)} layout="none">
+					<Audio src={staticFile(`sfx/${a.sfx}.wav`)} volume={sfxVolume(a.sfx!)} />
+				</Sequence>
+			))}
 		</AbsoluteFill>
 	);
 };

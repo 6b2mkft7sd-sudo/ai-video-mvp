@@ -2,10 +2,11 @@
   "name": "vibe-m02-v7",
   "version": "0.1.0",
   "private": true,
-  "description": "M02 v7.1 人格误会 · Remotion 10s 试片（We Never）",
+  "description": "M02 v7.2 人格误会 · Remotion 10s 试片（代码画场景为主，We Never）",
   "scripts": {
-    "studio": "remotion studio src/index.ts",
+    "studio": "node scripts/make-sfx.mjs && remotion studio src/index.ts",
     "prep-audio": "node scripts/prep-audio.mjs",
+    "sfx": "node scripts/make-sfx.mjs",
     "trial": "bash scripts/trial.sh"
   },
   "dependencies": {

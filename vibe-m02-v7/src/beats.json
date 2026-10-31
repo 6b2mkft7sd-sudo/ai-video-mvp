@@ -1,0 +1,39 @@
+{
+  "hasSoundtrack": false,
+  "source": null,
+  "onsets": [],
+  "cues": {
+    "s1": {
+      "start": 0.25,
+      "end": 1.85
+    },
+    "s2a": {
+      "start": 2.05,
+      "end": 4.15
+    },
+    "s2b": {
+      "start": 2.6,
+      "end": 4.15
+    },
+    "s4": {
+      "start": 4.7,
+      "end": 6.45
+    },
+    "s5": {
+      "start": 6.65,
+      "end": 8.05
+    },
+    "s6": {
+      "start": 8.25,
+      "end": 9.65
+    },
+    "s7a": {
+      "start": 9.85,
+      "end": null
+    },
+    "s7b": {
+      "start": 10.4,
+      "end": null
+    }
+  }
+}
